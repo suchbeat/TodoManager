@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="uk">
+
+<head>
+	<title>{% block title %}Lviv Party Fotos{% endblock %}</title>
+	<meta http-equiv="content-type" 
+		content="text/html;charset=utf-8" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/reset.css"/>
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/style.css"/>
+    <script type="text/javascript" src="{{MEDIA_URL}}script/jquery-1.4.min.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}script/jquery.fancybox-1.2.6.pack.js"></script> 
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/jquery.fancybox.css" type="text/css" media="screen">
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("a.fancy").fancybox({
+'imageScale': true,
+'overlayOpacity':0.8,
+'overlayColor': "#133",
+'easingIn':true,
+'frameWidth':600,
+'frameHeight':460,
+'hideOnContentClick':false,
+'imageScale':true
+            });
+		});
+	</script>
+    </head>
+
+
+<div id="page">
+    <div class="header">
+    <a href="{% url index %}"><img height="200px" width="1020px" src="{{MEDIA_URL}}img/head/{{category}}{%ifequal category "photo" %}{{"1234"|random}}{% endifequal %}.jpg"/></a>
+        <ul class="nav">
+            <li><a {% ifequal category "news"%} class="active" {% endifequal %} href="{% url by_category category="news"%}">Новини</a></li>
+            <li><a {% ifequal category "announce"%} class="active" {% endifequal %} href="{% url by_category category="announce"%}">Анонс</a></li>
+            <li><a {% ifequal category "photo"%} class="active" {% endifequal %} href="{% url by_category category="photo"%}">Фотозвіт</a></li>
+            <li><a {% ifequal category "audio"%} class="active" {% endifequal %} href="{% url by_category category="audio"%}">Аудіо</a></li>
+            <li><a {% ifequal category "video"%} class="active" {% endifequal %} href="{% url by_category category="video"%}">Відео</a></li>
+            <li><a {% ifequal category "promo"%} class="active" {% endifequal %} href="{% url by_category category="promo"%}">Промо</a></li>
+            <li><a {% ifequal category "lpftv"%} class="active" {% endifequal %} href="{% url by_category category="lpftv"%}">LPFTV</a></li>
+            <li><a {% ifequal category "friends"%} class="active" {% endifequal %} href="{% url friends %}">Друзі</a></li>
+        </ul>
+    </div>
+    {% load chunks %}
+    <div class="top banner">
+    {% chunk "banners_top" %}
+    </div>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    {% block archive %}
+    {% if category %}
+    <div  class="archive">
+    <h2>Архів</h2>
+    <ul class="arch_list">
+    {% load archivelinks %}
+    {% monthlinks 12%}
+    {% for month in months %}
+ <li><a href="{% url month_archive category month.year month|date:"m" %}">{{month|date:"F Y"}}</a></li>
+    {% if forloop.last %}
+ <li><a href="{% url year_archive category month.year %}">Старіші</a></li>
+    {% endif %}
+    {%endfor%}
+    </ul>
+    </div>
+    {% endif %}
+    {% endblock %}
+    <div class="right banners">
+    {% chunk "banners_right" %}
+
+    </div>
+    
+
+    <div class="footer">
+   {% ifequal category "lpftv" %}
+   <div class="bot_info">{% chunk "lpfinfo" %}</div>
+   {% else %}
+   <div class="bot_info">{% chunk "bottom_info" %}</div>
+   {% endifequal %}
+   
+   ©LPF {% now "Y" %} 
+    </div>
+</div>
+    {% chunk "counters" %}
+</body>
+</html>
+
