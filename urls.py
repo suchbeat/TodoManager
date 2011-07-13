@@ -1,13 +1,13 @@
 from django.conf.urls.defaults import patterns, include, url
-from TodoManager.views import homepage, hello
+from TodoManager import views
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-	url(r'^$', homepage),
-	url(r'^hello/$', hello),
+	url(r'^$', views.homepage),
+	url(r'^hello/$', views.hello),
     # Examples:
     # url(r'^$', 'TodoManager.views.home', name='home'),
     # url(r'^TodoManager/', include('TodoManager.foo.urls')),
@@ -17,4 +17,9 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+)
+
+urlpatterns += patterns('TodoManager.registration.views',
+	url(r'^login/$', 'login'),
+	url(r'^logout/$', 'logout'),
 )

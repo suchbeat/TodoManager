@@ -2,40 +2,14 @@
 
 {% block title %}Login{% endblock %}
 
-{% block message %}
- 
-        <div id="error_msg">
- 
-        {{ auth_form.non_field_errors }}
- 
-        </div>
- 
-{% endblock %}
- 
- 
 {% block content %}
- 
-    <form action="" method="POST">
- 
-    {% csrf_token %}
- 
- 
-        {% for field in auth_form %}
- 
-            <div class="fieldWrapper">
- 
-                {{ field.errors }}
- 
-                {{ field.label_tag }} {{ field }}
- 
-            </div>
- 
-        {%  endfor %}
- 
-    <input type="submit" value="Login" />
- 
-    </form>
- 
-    {{ ct }}
- 
+	<h3>Login</h3>
+	{{ errors }}
+	<form action="/login/" method="post" accept-charset="utf-8">
+		<label for="username">Username</label>
+		<input type="text" name="username" value="" id="username" />
+		<label for="password">Password</label>
+		<input type="password" name="password" value="" id="password" />
+		<p><input type="submit" value="Login →"></p>
+	</form>
 {%  endblock %}
