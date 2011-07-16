@@ -1,37 +1,41 @@
-<<<<<<< HEAD
-from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render
+from django.shortcuts import HttpResponseRedirect
+from django.contrib.auth.forms import UserCreationForm
 
 def register(request):
-	if 'email' in request.POST and request.POST['email']:
-		message = 'Your email is: %r' % request.POST['email']
-	else:
-		message = 'You submitted an empty form.'
-	return HttpResponse(message)
-=======
-from django.contrib.auth import authenticate
-from django.contrib.auth import login
-from django.shortcuts import render
-# from django.shortcuts import HttpResponseRedirect
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/')
 
-def login(request):
+	if request.method == 'POST':
+		form = UserCreationForm({'username':request.POST['username'], 'password1':request.POST['password'], 'password2':request.POST['password']})
+		if form.is_valid():
+			new_user = form.save()
+			login(request, authenticate(username=request.POST['username'], password=request.POST['password']))
+			return HttpResponseRedirect('/')
+		else:
+			return render(request, 'login.html', {'error':'Incorrect data entered!'})
+	else:
+		return render(request, 'login.html')
+
+def login_view(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/')
+
 	if request.method == 'POST':
 		user = authenticate(username=request.POST['username'], password=request.POST['password'])
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-				# success
-				return render(request, '/')
-				# return HttpResponseRedirect('/')
+				return HttpResponseRedirect('/')
 			else:
-				# disabled account
 				return render(request, 'login.html', {'error':'Unactive user!'})
-				# return direct_to_template(request, 'inactive_account.html')
 		else:
-			# invalid login
 			return render(request, 'login.html', {'error':'Incorrect data entered!'})
-			# return direct_to_template(request, 'invalid_login.html')
+	else:
+		return render(request, 'login.html')
 
-def logout(request):
-	logout(request)
-	return direct_to_template(request, 'logged_out.html')
->>>>>>> 1bf3fb0c6e6a93e912c447ab7e6b8a6ed7ab0265
+def logout_view(request):
+	if request.user.is_authenticated():
+		logout(request)
+	return HttpResponseRedirect('/')
