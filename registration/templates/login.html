@@ -3,39 +3,27 @@
 {% block title %}Login{% endblock %}
 
 {% block message %}
- 
-        <div id="error_msg">
- 
-        {{ auth_form.non_field_errors }}
- 
-        </div>
- 
+	<div id="error_msg">
+		{{ auth_form.non_field_errors }}
+	</div>
 {% endblock %}
- 
- 
+
 {% block content %}
- 
-    <form action="" method="POST">
- 
-    {% csrf_token %}
- 
- 
-        {% for field in auth_form %}
- 
-            <div class="fieldWrapper">
- 
-                {{ field.errors }}
- 
-                {{ field.label_tag }} {{ field }}
- 
-            </div>
- 
-        {%  endfor %}
- 
-    <input type="submit" value="Login" />
- 
-    </form>
- 
-    {{ ct }}
- 
+	<div class="register">
+		<p>Registration</p>
+		<form action="/register/" method="post">
+			<input type="text" name="email">
+			<input type="password" name="password">
+			<input type="submit" value="Register">
+		</form>
+	</div>
+
+	<div class="login">
+		<p>Log In</p>
+		<form action="/login/" method="post">
+			<input type="text" name="email">
+			<input type="password" name="password">
+			<input type="submit" value="Log In">
+		</form>
+	</div>
 {%  endblock %}
