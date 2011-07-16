@@ -2,6 +2,7 @@
 
 {% block title %}Login{% endblock %}
 
+<<<<<<< HEAD
 {% block message %}
 	<div id="error_msg">
 		{{ auth_form.non_field_errors }}
@@ -26,4 +27,16 @@
 			<input type="submit" value="Log In">
 		</form>
 	</div>
+=======
+{% block content %}
+	<h3>Login</h3>
+	{{ errors }}
+	<form action="/login/" method="post" accept-charset="utf-8">
+		<label for="username">Username</label>
+		<input type="text" name="username" value="" id="username" />
+		<label for="password">Password</label>
+		<input type="password" name="password" value="" id="password" />
+		<p><input type="submit" value="Login →"></p>
+	</form>
+>>>>>>> 1bf3fb0c6e6a93e912c447ab7e6b8a6ed7ab0265
 {%  endblock %}
