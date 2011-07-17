@@ -5,14 +5,14 @@ from django.contrib.auth.forms import UserCreationForm
 
 def register(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/')
+		return HttpResponseRedirect('/list/')
 
 	if request.method == 'POST':
 		form = UserCreationForm({'username':request.POST['username'], 'password1':request.POST['password'], 'password2':request.POST['password']})
 		if form.is_valid():
 			new_user = form.save()
 			login(request, authenticate(username=request.POST['username'], password=request.POST['password']))
-			return HttpResponseRedirect('/')
+			return HttpResponseRedirect('/list/')
 		else:
 			return render(request, 'login.html', {'error':'Incorrect data entered!'})
 	else:
@@ -20,14 +20,14 @@ def register(request):
 
 def login_view(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/')
+		return HttpResponseRedirect('/list/')
 
 	if request.method == 'POST':
 		user = authenticate(username=request.POST['username'], password=request.POST['password'])
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-				return HttpResponseRedirect('/')
+				return HttpResponseRedirect('/list/')
 			else:
 				return render(request, 'login.html', {'error':'Unactive user!'})
 		else:

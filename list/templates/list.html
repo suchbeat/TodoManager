@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block content %}
+	{% if results %}
+		<ul>
+			{% for item in results %}
+				<li>{{ item|escape }}</l1>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No todo items found</p>
+	{% endif %}
+{%  endblock %}

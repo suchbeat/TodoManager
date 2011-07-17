@@ -24,3 +24,7 @@ urlpatterns += patterns('TodoManager.registration.views',
 	url(r'^login/$', 'login_view'),
 	url(r'^logout/$', 'logout_view'),
 )
+
+urlpatterns += patterns('TodoManager.list.views',
+	url(r'^list/$', 'list'),
+)
