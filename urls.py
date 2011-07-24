@@ -6,8 +6,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-	url(r'^$', views.homepage),
-	url(r'^hello/$', views.hello),
+	url(r'^$', include('TodoManager.list.urls')),
     # Examples:
     # url(r'^$', 'TodoManager.views.home', name='home'),
     # url(r'^TodoManager/', include('TodoManager.foo.urls')),
@@ -23,8 +22,4 @@ urlpatterns += patterns('TodoManager.registration.views',
 	url(r'^register/$', 'register'),
 	url(r'^login/$', 'login_view'),
 	url(r'^logout/$', 'logout_view'),
-)
-
-urlpatterns += patterns('TodoManager.list.views',
-	url(r'^list/$', 'list'),
 )

@@ -6,6 +6,3 @@ def homepage(request):
 	if request.user.is_authenticated():
 		return HttpResponseRedirect('/list/')
 	return render(request, 'login.html')
-
-def hello(request):
-	return HttpResponse("Hello world")
